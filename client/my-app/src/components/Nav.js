@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../store/authSlice";
+import { user_logout } from "../store/authSlice";
 import "../components/css/nav.css"; // CSS 파일 import
 
 const Nav = () => {
@@ -9,7 +9,7 @@ const Nav = () => {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   const handleLogout = () => {
-    dispatch(logout());
+    dispatch(user_logout());
   };
 
   return (

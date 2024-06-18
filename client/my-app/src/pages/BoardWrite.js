@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
 import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 import "../pages/css/boardwrite.css";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
@@ -9,6 +10,8 @@ const BoardWrite = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [cookies] = useCookies(["x_auth"]); // useCookies 훅 사용
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -39,7 +42,7 @@ const BoardWrite = () => {
       console.log(response.data);
       if (response.data.success) {
         alert("글 작성이 완료되었습니다.");
-        window.location.href = "/board"; // 글 작성 후 게시판 페이지로 이동
+        navigate("/board"); // 글 작성 후 게시판 페이지로 이동
       } else {
         alert("글 작성에 실패했습니다. 다시 시도해주세요.");
       }
@@ -50,7 +53,7 @@ const BoardWrite = () => {
   };
 
   const handleCancel = () => {
-    window.location.href = "/board"; // 취소 버튼 클릭 시 게시판 페이지로 이동
+    navigate("/board"); // 취소 버튼 클릭 시 게시판 페이지로 이동
   };
 
   return (

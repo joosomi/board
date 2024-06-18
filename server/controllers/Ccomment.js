@@ -38,7 +38,7 @@ exports.getCommentsByBoard = async (req, res) => {
     const comments = await Comment.find({ boardId }).sort({ createdAt: -1 });
 
     res.send(comments);
-    console.log(comments);
+    // console.log(comments);
     //댓글이 없을 경우 예외처리
   } catch (error) {
     // console.log(error);
@@ -46,6 +46,44 @@ exports.getCommentsByBoard = async (req, res) => {
       success: false,
       message: "댓글을 가져오는 데 실패했습니다.",
       error,
+    });
+  }
+};
+
+//본인이 쓴 댓글 삭제
+exports.deleteComment = async (req, res) => {
+  try {
+    const user = req.body.id;
+    const commentId = req.params.commentId;
+    // console.log(user);
+    // console.log(commentId);
+    const comment = await Comment.findById(commentId);
+
+    console.log(comment.author);
+    if (!comment) {
+      return res.send({
+        success: false,
+        msg: "댓글이 존재하지 않습니다.",
+      });
+    }
+
+    if (comment.author !== user) {
+      return res.send({
+        success: false,
+        msg: "본인의 댓글만 삭제할 수 있습니다.",
+      });
+    }
+
+    await Comment.findByIdAndDelete(commentId);
+
+    return res.send({
+      success: true,
+      msg: "댓글이 삭제되었습니다.",
+    });
+  } catch (err) {
+    return res.send({
+      success: false,
+      msg: err.message,
     });
   }
 };

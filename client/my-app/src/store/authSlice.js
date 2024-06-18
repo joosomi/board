@@ -9,13 +9,16 @@ const authSlice = createSlice({
   name: "auth",
   initialState: {
     isAuthenticated: !!cookies.get("x_auth"), //값을 boolean으로 가져옴
+    id: null,
   },
   reducers: {
-    login: (state) => {
+    user_login: (state, action) => {
       state.isAuthenticated = true;
+      state.id = action.payload; // 데이터를 상태에 저장
     },
-    logout: (state) => {
+    user_logout: (state) => {
       state.isAuthenticated = false;
+      state.id = null; // 로그아웃 시 데이터 초기화
       cookies.remove("x_auth");
     },
   },
@@ -25,6 +28,6 @@ const authSlice = createSlice({
 intialState: 초기 상태 정의 
 reducers: 상태를 변경하는 함수 - login, logout 2개의 Reducer
 */
-export const { login, logout } = authSlice.actions;
+export const { user_login, user_logout } = authSlice.actions;
 
 export default authSlice.reducer;

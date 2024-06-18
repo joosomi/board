@@ -1,11 +1,15 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector } from "react-redux";
 import "../components/css/comment.css";
 
 const Comment = ({ boardId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
   const [error, setError] = useState(null);
+
+  const userId = useSelector((state) => state.auth.id);
+  // console.log(userId);
 
   useEffect(() => {
     const getComments = async () => {
@@ -49,6 +53,22 @@ const Comment = ({ boardId }) => {
     }
   };
 
+  /*댓글 삭제*/
+  const handleDelete = async (commentId) => {
+    const confirm = window.confirm("댓글을 삭제하시겠습니까?");
+
+    console.log(commentId);
+    console.log(userId);
+
+    if (confirm === true) {
+      await axios.post(`/comment/${commentId}`, {
+        id: userId,
+      });
+
+      alert("댓글 삭제가 완료되었습니다.");
+    }
+  };
+
   return (
     <div className="comment-container">
       <h4>댓글</h4>
@@ -58,7 +78,10 @@ const Comment = ({ boardId }) => {
           value={newComment}
           onChange={(e) => setNewComment(e.target.value)}
         />
-        <button type="submit">댓글 작성</button>
+        <div class="btn-form">
+          {" "}
+          <button type="submit">댓글 작성</button>
+        </div>
       </form>
       <div className="comment-list">
         {comments.map((comment) => (
@@ -68,6 +91,9 @@ const Comment = ({ boardId }) => {
             <p className="comment-date">
               {new Date(comment.createdAt).toLocaleString()}
             </p>
+            {comment.author === userId && (
+              <button onClick={() => handleDelete(comment._id)}>✖️</button>
+            )}
           </div>
         ))}
       </div>

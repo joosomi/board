@@ -1,29 +1,53 @@
 .board-detail {
-  margin-top: 50%;
-  padding: 20px;
-  font-family: Arial, sans-serif;
+  position: relative;
+  margin-top: 50px;
 }
 
-.board-detail h1 {
-  font-size: 1em;
-  margin-bottom: 10px;
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
 }
 
-.board-detail p {
-  margin: 5px 0;
+.header h1 {
+  flex-grow: 1;
+  font-size: 24px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  margin-right: 4px;
 }
 
-.board-detail .author,
-.board-detail .created-at {
-  color: gray;
-  font-size: 0.9em;
+.delete-button {
+  margin-left: 10px;
+  background-color: #666666;
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.board-detail .error {
-  color: red;
-  font-weight: bold;
+.back-button {
+  padding: 5px;
+  border: none;
+  border-radius: 50%;
+  background-color: #a2a2a2;
+  color: white;
+  cursor: pointer;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.board-detail .loading {
-  font-style: italic;
+.delete-button:hover {
+  background-color: #ff0000;
 }
