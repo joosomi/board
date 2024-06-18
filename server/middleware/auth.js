@@ -5,6 +5,8 @@ let auth = async (req, res, next) => {
     // 클라이언트 쿠키에서 토큰 가져오기
     let token = req.cookies.x_auth;
 
+    // console.log(token);
+
     // 토큰을 복호화한 후 유저 찾기
     let user = await User.findByToken(token);
 
@@ -18,7 +20,8 @@ let auth = async (req, res, next) => {
     req.user = user;
     next();
   } catch (err) {
-    return res.status(401).json({ isAuth: false, error: true });
+    console.log(err);
+    return res.send({ isAuth: false, error: true });
   }
 };
 

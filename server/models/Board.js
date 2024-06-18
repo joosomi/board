@@ -4,7 +4,6 @@ const boardSchema = new mongoose.Schema({
   title: {
     type: String,
     required: true,
-    trim: true,
   },
   content: {
     type: String,
@@ -22,4 +21,4 @@ const boardSchema = new mongoose.Schema({
 
 const Board = mongoose.model("Board", boardSchema);
 
-module.exports = Board;
+module.exports = { Board };

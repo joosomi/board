@@ -1,0 +1,29 @@
+.board-detail {
+  margin-top: 50%;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.board-detail h1 {
+  font-size: 1em;
+  margin-bottom: 10px;
+}
+
+.board-detail p {
+  margin: 5px 0;
+}
+
+.board-detail .author,
+.board-detail .created-at {
+  color: gray;
+  font-size: 0.9em;
+}
+
+.board-detail .error {
+  color: red;
+  font-weight: bold;
+}
+
+.board-detail .loading {
+  font-style: italic;
+}

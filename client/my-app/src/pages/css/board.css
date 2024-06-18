@@ -1,0 +1,63 @@
+.board-container {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.board-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.board-header h1 {
+  margin: 0;
+}
+
+.board-header button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.board-header button:hover {
+  background-color: #0056b3;
+}
+
+.posts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.post-item {
+  border: 1px solid #ddd;
+  padding: 20px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  flex: 1 1 calc(33.333% - 20px); /* 3개의 열로 구성 */
+  box-sizing: border-box;
+}
+
+.post-item h2 {
+  margin: 0 0 10px 0;
+  font-size: 1.5rem;
+}
+
+.post-item p {
+  margin: 0;
+  color: #555;
+}
+
+.post-item a {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.post-item a:hover {
+  text-decoration: underline;
+}

@@ -39,12 +39,12 @@ exports.login = async (req, res) => {
       });
     }
 
-    console.log("유저 찾음", user);
+    // console.log("유저 찾음", user);
 
     const userPW = req.body.password;
     const isMatch = await user.comparePassword(userPW);
 
-    console.log("비밀번호 비교 결과:", isMatch);
+    // console.log("비밀번호 비교 결과:", isMatch);
 
     if (!isMatch) {
       return res.send({
@@ -55,11 +55,16 @@ exports.login = async (req, res) => {
 
     const tokenUser = await user.generateToken();
 
-    return res.json({
-      loginSuccess: true,
-      token: tokenUser.token,
-      userId: tokenUser._id,
-    });
+    res
+      .cookie("x_auth", tokenUser.token, {
+        maxAge: 24 * 60 * 60 * 1000, // 쿠키의 유효 기간 설정 (24시간)
+      })
+      .status(200)
+      .json({
+        loginSuccess: true,
+        token: tokenUser.token,
+        userId: tokenUser._id,
+      });
   } catch (err) {
     console.error(err);
     return res.send({
@@ -73,10 +78,9 @@ exports.login = async (req, res) => {
 exports.auth = (req, res) => {
   res.status(200).json({
     _id: req.user._id,
-    isAdmin: req.user.role === 0 ? false : true,
+    // isAdmin: req.user.role === 0 ? false : true,
     isAuth: true,
     id: req.user.id,
-    role: req.user.role,
   });
 };
 
