@@ -35,7 +35,8 @@ const Login = () => {
       if (response.data.loginSuccess) {
         alert("로그인 성공");
         // 로그인 성공 시 Redux 스토어에 로그인 상태 저장
-        dispatch(user_login(id));
+        sessionStorage.setItem("userId", id);
+        // dispatch(user_login(id));
         navigate("/board"); // 리덕스 저장 후 게시판으로 redirect
       } else {
         alert(response.data.message);

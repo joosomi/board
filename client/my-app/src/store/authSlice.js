@@ -3,18 +3,20 @@ import { createSlice } from "@reduxjs/toolkit";
 import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
+const userIdFromSessionStorage = sessionStorage.getItem("user_id");
 
 //createSlice -> redux state, reducer를 한번에 정의할 수 있음
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     isAuthenticated: !!cookies.get("x_auth"), //값을 boolean으로 가져옴
-    id: null,
+    // id: null,
+    id: userIdFromSessionStorage || null,
   },
   reducers: {
     user_login: (state, action) => {
       state.isAuthenticated = true;
-      state.id = action.payload; // 데이터를 상태에 저장
+      // state.id = action.payload; // 데이터를 상태에 저장
     },
     user_logout: (state) => {
       state.isAuthenticated = false;
