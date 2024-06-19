@@ -30,7 +30,9 @@ const Comment = ({ boardId }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (newComment === "") {
+    if (!userId) {
+      alert("회원만 댓글을 작성할 수 있습니다.");
+    } else if (newComment === "") {
       alert("내용을 입력해주세요!");
       return;
     }
@@ -58,8 +60,9 @@ const Comment = ({ boardId }) => {
 
   const handleReplySubmit = async (commentId, e) => {
     e.preventDefault();
-
-    if (!newReply[commentId]) {
+    if (!userId) {
+      alert("회원만 댓글을 작성할 수 있습니다.");
+    } else if (!newReply[commentId]) {
       alert("내용을 입력해주세요!");
       return;
     }

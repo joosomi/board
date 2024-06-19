@@ -34,7 +34,7 @@ textarea {
   resize: vertical;
 }
 
-button {
+/* button {
   padding: 10px 20px;
   margin-right: 10px;
   border: none;
@@ -47,7 +47,7 @@ button {
 
 button:hover {
   background-color: #0056b3;
-}
+} */
 
 /* 추가된 클래스 네임에 대한 스타일 */
 .submit-button {

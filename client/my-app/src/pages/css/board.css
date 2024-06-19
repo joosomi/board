@@ -5,7 +5,7 @@
   max-width: 800px;
   margin: 0 auto;
   height: calc(100vh - 70px); /* 전체 화면 높이에서 70px 뺀 값 */
-  overflow-y: auto; /* 세로 스크롤 가능 */
+  overflow-y: auto;
 }
 
 .board-header {
@@ -108,4 +108,40 @@
     padding: 6px;
     font-size: 0.9rem;
   }
+}
+
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  margin: 20px 0;
+}
+
+.pagination {
+  list-style: none;
+  display: flex;
+  padding: 0;
+}
+
+.pagination li {
+  margin: 0 5px;
+}
+
+.pagination li a {
+  display: block;
+  padding: 8px 12px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  text-decoration: none;
+  color: #007bff;
+}
+
+.pagination li a:hover {
+  background-color: #0056b3;
+  color: white;
+}
+
+.pagination li.active a {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
 }

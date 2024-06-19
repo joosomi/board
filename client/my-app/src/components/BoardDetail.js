@@ -12,7 +12,7 @@ const BoardDetail = () => {
   const [error, setError] = useState(null);
 
   const userId = useSelector((state) => state.auth.id);
-  console.log(userId);
+  // console.log(userId);
 
   const navigate = useNavigate();
 

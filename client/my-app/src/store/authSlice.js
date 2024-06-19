@@ -21,7 +21,7 @@ const authSlice = createSlice({
     user_logout: (state) => {
       state.isAuthenticated = false;
       state.id = null; // 로그아웃 시 데이터 초기화
-      cookies.remove("x_auth");
+      cookies.remove("x_auth", { path: "/", domain: window.location.hostname });
       sessionStorage.clear();
     },
   },
