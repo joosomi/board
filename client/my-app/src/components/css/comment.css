@@ -2,6 +2,10 @@
   padding: 20px;
   border-top: 1px solid #ccc;
   font-family: Arial, sans-serif;
+  overflow-y: auto; /* 세로 스크롤을 허용 */
+  max-height: calc(
+    100vh - 90px
+  ); /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
 }
 
 .comment-form {

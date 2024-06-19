@@ -50,12 +50,15 @@ exports.writeComment = async (req, res) => {
 //     });
 //   }
 // };
+
 // 특정 게시글의 모든 댓글 가져오기
 exports.getCommentsByBoard = async (req, res) => {
   try {
     const { id: boardId } = req.params;
 
-    const comments = await Comment.find({ boardId }).sort({ createdAt: 1 });
+    const comments = await Comment.find({ boardId }).sort({
+      createdAt: 1,
+    });
 
     const constructCommentTree = (comments, parentId = null) => {
       return comments
@@ -86,11 +89,8 @@ exports.deleteComment = async (req, res) => {
   try {
     const user = req.body.id;
     const commentId = req.params.commentId;
-    // console.log(user);
-    // console.log(commentId);
     const comment = await Comment.findById(commentId);
 
-    console.log(comment.author);
     if (!comment) {
       return res.send({
         success: false,
@@ -105,7 +105,9 @@ exports.deleteComment = async (req, res) => {
       });
     }
 
-    await Comment.findByIdAndDelete(commentId);
+    // isDeleted를 true로 설정
+    comment.isDeleted = true;
+    await comment.save();
 
     return res.send({
       success: true,

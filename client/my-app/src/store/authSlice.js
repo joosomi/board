@@ -16,12 +16,13 @@ const authSlice = createSlice({
   reducers: {
     user_login: (state, action) => {
       state.isAuthenticated = true;
-      // state.id = action.payload; // 데이터를 상태에 저장
+      state.id = action.payload; // 데이터를 상태에 저장
     },
     user_logout: (state) => {
       state.isAuthenticated = false;
       state.id = null; // 로그아웃 시 데이터 초기화
       cookies.remove("x_auth");
+      sessionStorage.clear();
     },
   },
 });

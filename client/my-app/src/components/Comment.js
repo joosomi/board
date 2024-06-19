@@ -100,13 +100,28 @@ const Comment = ({ boardId }) => {
     const confirm = window.confirm("댓글을 삭제하시겠습니까?");
 
     if (confirm === true) {
-      await axios.post(`/comment/${commentId}`, { id: userId });
+      try {
+        const response = await axios.post(`/comment/${commentId}`, {
+          id: userId,
+        });
 
-      alert("댓글 삭제가 완료되었습니다.");
-      setComments(comments.filter((comment) => comment._id !== commentId));
+        if (response.data.success) {
+          alert("댓글 삭제가 완료되었습니다.");
+          setComments(
+            comments.map((comment) =>
+              comment._id === commentId
+                ? { ...comment, isDeleted: true }
+                : comment
+            )
+          );
+        } else {
+          alert(response.data.msg);
+        }
+      } catch (err) {
+        alert("댓글 삭제에 실패했습니다. 다시 시도해주세요.");
+      }
     }
   };
-
   return (
     <div className="comment-container">
       <CommentForm

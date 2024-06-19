@@ -1,14 +1,23 @@
 .board-container {
+  position: relative; /* 위치 상대적 */
+  top: 70px; /* 상단에서 70px 떨어진 위치 */
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
+  height: calc(100vh - 70px); /* 전체 화면 높이에서 70px 뺀 값 */
+  overflow-y: auto; /* 세로 스크롤 가능 */
 }
 
 .board-header {
+  position: sticky;
+  top: 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 20px;
+  background-color: white;
+  padding: 10px 0;
+  border-bottom: 1px solid #ddd;
+  z-index: 1000;
 }
 
 .board-header h1 {
@@ -16,7 +25,7 @@
 }
 
 .board-header button {
-  padding: 10px 20px;
+  padding: 9px 18px;
   background-color: #007bff;
   color: #fff;
   border: none;
@@ -31,6 +40,7 @@
 .board-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .board-table th,

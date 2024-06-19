@@ -14,17 +14,23 @@ const Nav = () => {
 
   return (
     <nav>
-      <Link to="/">Home</Link> |
+      <Link to="/">Home</Link> {" | "}
       {!isAuthenticated ? (
         <>
-          <Link to="/login">Login</Link> |<Link to="/signup">SignUp</Link>
+          <Link to="/login">Login</Link> {" | "}
+          <Link to="/signup">SignUp</Link> {" | "}
+          <Link to="/board">Board</Link>
         </>
       ) : (
-        <Link to="/" onClick={handleLogout}>
-          Logout
-        </Link>
+        <>
+          <Link to="/" onClick={handleLogout}>
+            Logout
+          </Link>{" "}
+          {" | "}
+          <Link to="/board">Board</Link> {" | "}
+          <Link to="/board/write">Write</Link>
+        </>
       )}
-      | <Link to="/board">Board</Link> |<Link to="/board/write">Write</Link>
     </nav>
   );
 };

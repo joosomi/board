@@ -1,9 +1,14 @@
 .board-detail {
-  position: relative;
-  padding-top: 70px;
-  padding: 0 20px;
+  position: fixed; /* 위치 고정 */
+  top: 70px; /* 상단에서 70px 떨어진 위치 */
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 0 2%;
   overflow-y: auto; /* 세로 스크롤을 허용 */
-  max-height: 80vh; /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
+  max-height: calc(
+    100vh - 70px
+  ); /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
 }
 
 .header {
@@ -77,6 +82,7 @@
 .post-content {
   margin-bottom: 5%;
 }
+
 @media (max-width: 768px) {
   .header {
     align-items: flex-start;
