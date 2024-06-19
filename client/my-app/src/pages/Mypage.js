@@ -86,7 +86,7 @@ const Board = () => {
             <th>제목</th>
             <th>작성일</th>
             <th>조회수</th>
-            <th>댓글 수</th>
+            <th>댓글</th>
             <th>수정</th>
             <th>삭제</th>
           </tr>

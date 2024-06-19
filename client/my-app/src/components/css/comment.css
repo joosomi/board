@@ -13,7 +13,8 @@
 }
 
 .comment-form textarea,
-.reply-txt {
+.reply-txt,
+.edit-txt {
   width: 100%;
   height: 40px;
   padding: 10px;
@@ -110,6 +111,17 @@
 }
 
 .edit-button {
+  background-color: transparent;
+  background-color: #ffffff;
+  border: none;
+  cursor: pointer;
+  font-size: 0.7em;
+  padding: 0;
+  margin-right: 4px;
+}
+
+.edit-btn,
+.back-btn {
   background-color: transparent;
   background-color: #ffffff;
   border: none;

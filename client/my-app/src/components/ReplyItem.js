@@ -71,11 +71,16 @@ const ReplyItem = ({
           {isEditing ? (
             <div>
               <textarea
+                className="edit-txt"
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
               />
-              <button onClick={handleEditSubmit}>저장</button>
-              <button onClick={() => setIsEditing(false)}>취소</button>
+              <button className="edit-button" onClick={handleEditSubmit}>
+                ✏️
+              </button>
+              <button className="back-btn" onClick={() => setIsEditing(false)}>
+                ⏪
+              </button>
             </div>
           ) : (
             <>

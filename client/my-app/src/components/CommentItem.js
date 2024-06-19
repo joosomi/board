@@ -73,11 +73,16 @@ const CommentItem = ({
           {isEditing ? (
             <div>
               <textarea
+                className="edit-txt"
                 value={editedContent}
                 onChange={(e) => setEditedContent(e.target.value)}
               />
-              <button onClick={handleEditSubmit}>저장</button>
-              <button onClick={() => setIsEditing(false)}>취소</button>
+              <button className="edit-btn" onClick={handleEditSubmit}>
+                ✍️
+              </button>
+              <button class="back-btn" onClick={() => setIsEditing(false)}>
+                ⏪
+              </button>
             </div>
           ) : (
             <>
