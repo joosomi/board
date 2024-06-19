@@ -1,10 +1,14 @@
 .board-detail {
   position: relative;
-  margin-top: 50px;
+  padding-top: 70px;
+  padding: 0 20px;
+  overflow-y: auto; /* 세로 스크롤을 허용 */
+  max-height: 80vh; /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
 }
 
 .header {
   display: flex;
+  flex-wrap: wrap; /* 작은 화면에서 줄 바꿈을 허용 */
   justify-content: space-between;
   align-items: center;
   margin-bottom: 20px;
@@ -19,9 +23,21 @@
   margin-right: 4px;
 }
 
+.author {
+  margin: 5px 0;
+  font-weight: bold;
+  font-size: 13px;
+  color: #555;
+}
+
+.created-at {
+  font-size: 0.7em;
+  color: gray;
+}
+
 .delete-button {
   margin-left: 10px;
-  background-color: #666666;
+  background-color: #ffffff;
   padding: 5px;
   border: none;
   border-radius: 50%;
@@ -35,10 +51,11 @@
 }
 
 .back-button {
+  margin-left: 10px;
+  background-color: #ffffff;
   padding: 5px;
   border: none;
   border-radius: 50%;
-  background-color: #a2a2a2;
   color: white;
   cursor: pointer;
   width: 30px;
@@ -48,6 +65,34 @@
   align-items: center;
 }
 
-.delete-button:hover {
-  background-color: #ff0000;
+.delete-button:hover,
+.back-button:hover {
+  background-color: #ffffff;
+}
+
+.content {
+  word-wrap: break-word; /* 긴 텍스트가 박스를 넘지 않도록 */
+}
+
+.post-content {
+  margin-bottom: 5%;
+}
+@media (max-width: 768px) {
+  .header {
+    align-items: flex-start;
+  }
+
+  .header h1 {
+    font-size: 20px; /* 제목 크기 조정 */
+    margin-bottom: 10px; /* 하단 여백 추가 */
+  }
+
+  .delete-button,
+  .back-button,
+  .reply-button {
+    width: 40px; /* 버튼 크기 조정 */
+    height: 40px;
+    margin-left: 0;
+    margin-bottom: 10px; /* 하단 여백 추가 */
+  }
 }

@@ -2,14 +2,17 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import "../components/css/comment.css";
+import CommentForm from "./CommentForm";
+import CommentItem from "./CommentItem";
 
 const Comment = ({ boardId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [newReply, setNewReply] = useState({});
+  const [showReplyForm, setShowReplyForm] = useState({});
   const [error, setError] = useState(null);
 
   const userId = useSelector((state) => state.auth.id);
-  // console.log(userId);
 
   useEffect(() => {
     const getComments = async () => {
@@ -22,7 +25,7 @@ const Comment = ({ boardId }) => {
     };
 
     getComments();
-  }, [boardId]);
+  }, [newComment, newReply, comments]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -53,48 +56,77 @@ const Comment = ({ boardId }) => {
     }
   };
 
-  /*댓글 삭제*/
+  const handleReplySubmit = async (commentId, e) => {
+    e.preventDefault();
+
+    if (!newReply[commentId]) {
+      alert("내용을 입력해주세요!");
+      return;
+    }
+
+    try {
+      const response = await axios.post(
+        "/comment/write",
+        {
+          boardId: boardId,
+          content: newReply[commentId],
+          parentCommentId: commentId,
+        },
+        { withCredentials: true }
+      );
+
+      if (response.data.success) {
+        setComments(
+          comments.map((comment) =>
+            comment._id === commentId
+              ? {
+                  ...comment,
+                  replies: [response.data.comment, ...(comment.replies || [])],
+                }
+              : comment
+          )
+        );
+        setNewReply({ ...newReply, [commentId]: "" });
+        setShowReplyForm({ ...showReplyForm, [commentId]: false });
+      } else {
+        setError(response.data.msg);
+      }
+    } catch (err) {
+      alert("대댓글을 작성하는 데 실패했습니다. 다시 시도해주세요.");
+    }
+  };
+
   const handleDelete = async (commentId) => {
     const confirm = window.confirm("댓글을 삭제하시겠습니까?");
 
-    console.log(commentId);
-    console.log(userId);
-
     if (confirm === true) {
-      await axios.post(`/comment/${commentId}`, {
-        id: userId,
-      });
+      await axios.post(`/comment/${commentId}`, { id: userId });
 
       alert("댓글 삭제가 완료되었습니다.");
+      setComments(comments.filter((comment) => comment._id !== commentId));
     }
   };
 
   return (
     <div className="comment-container">
-      <h4>댓글</h4>
-      <form className="comment-form" onSubmit={handleSubmit}>
-        <textarea
-          placeholder="댓글을 입력하세요"
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-        />
-        <div class="btn-form">
-          {" "}
-          <button type="submit">댓글 작성</button>
-        </div>
-      </form>
+      <CommentForm
+        newComment={newComment}
+        setNewComment={setNewComment}
+        handleSubmit={handleSubmit}
+      />
       <div className="comment-list">
         {comments.map((comment) => (
-          <div className="comment-item" key={comment._id}>
-            <p className="comment-author">작성자: {comment.author}</p>
-            <p>{comment.content}</p>
-            <p className="comment-date">
-              {new Date(comment.createdAt).toLocaleString()}
-            </p>
-            {comment.author === userId && (
-              <button onClick={() => handleDelete(comment._id)}>✖️</button>
-            )}
-          </div>
+          <CommentItem
+            key={comment._id}
+            comment={comment}
+            userId={userId}
+            showReplyForm={showReplyForm}
+            setShowReplyForm={setShowReplyForm}
+            handleDelete={handleDelete}
+            newReply={newReply}
+            setNewReply={setNewReply}
+            handleReplySubmit={handleReplySubmit}
+          />
         ))}
       </div>
     </div>

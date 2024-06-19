@@ -9,12 +9,13 @@ exports.writeComment = async (req, res) => {
 
     if (!user) {
     }
-    const { boardId, content } = req.body;
+    const { boardId, content, parentCommentId } = req.body;
 
     const newComment = new Comment({
       boardId,
       content,
       author: user.id,
+      parentCommentId: parentCommentId || null,
     });
 
     await newComment.save();
@@ -31,17 +32,47 @@ exports.writeComment = async (req, res) => {
 };
 
 // 특정 게시글의 모든 댓글 가져오기
+// exports.getCommentsByBoard = async (req, res) => {
+//   try {
+//     const { id: boardId } = req.params;
+
+//     const comments = await Comment.find({ boardId }).sort({ createdAt: -1 });
+
+//     res.send(comments);
+//     // console.log(comments);
+//     //댓글이 없을 경우 예외처리
+//   } catch (error) {
+//     // console.log(error);
+//     res.send({
+//       success: false,
+//       message: "댓글을 가져오는 데 실패했습니다.",
+//       error,
+//     });
+//   }
+// };
+// 특정 게시글의 모든 댓글 가져오기
 exports.getCommentsByBoard = async (req, res) => {
   try {
     const { id: boardId } = req.params;
 
-    const comments = await Comment.find({ boardId }).sort({ createdAt: -1 });
+    const comments = await Comment.find({ boardId }).sort({ createdAt: 1 });
 
-    res.send(comments);
-    // console.log(comments);
-    //댓글이 없을 경우 예외처리
+    const constructCommentTree = (comments, parentId = null) => {
+      return comments
+        .filter(
+          (comment) =>
+            comment.parentCommentId?.toString() === parentId?.toString()
+        )
+        .map((comment) => ({
+          ...comment.toObject(),
+          replies: constructCommentTree(comments, comment._id),
+        }));
+    };
+
+    const commentTree = constructCommentTree(comments);
+
+    res.send(commentTree);
   } catch (error) {
-    // console.log(error);
     res.send({
       success: false,
       message: "댓글을 가져오는 데 실패했습니다.",

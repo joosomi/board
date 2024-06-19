@@ -18,6 +18,15 @@ const commentSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  parentCommentId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Comment",
+    default: null,
+  },
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 const Comment = mongoose.model("Comment", commentSchema);

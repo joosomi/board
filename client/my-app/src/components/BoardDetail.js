@@ -59,18 +59,21 @@ const BoardDetail = () => {
         <h1>{post.title}</h1>
         {post.author === userId && (
           <button className="delete-button" onClick={handleDelete}>
-            ✖️
+            ❌
           </button>
         )}
         <button className="back-button" onClick={handleBack}>
           🔙
         </button>
       </div>
-      <p>{post.content}</p>
-      <p className="author">Author: {post.author}</p>
-      <p className="created-at">
-        Posted on: {new Date(post.createdAt).toLocaleString()}
-      </p>
+      <div className="post-content">
+        <p className="content">{post.content}</p>
+        <p className="author">Author: {post.author}</p>
+        <p className="created-at">
+          Posted on: {new Date(post.createdAt).toLocaleString()}{" "}
+        </p>
+      </div>
+
       <Comment boardId={boardId}></Comment>
     </div>
   );

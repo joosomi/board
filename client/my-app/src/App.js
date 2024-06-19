@@ -1,6 +1,7 @@
 import React from "react";
 import { BrowserRouter, Link } from "react-router-dom";
 import AppRouter from "./routes/AppRouter";
+import "./reset.css";
 import { useCookies } from "react-cookie";
 
 import { useSelector, useDispatch } from "react-redux";
