@@ -149,3 +149,43 @@ exports.deleteComment = async (req, res) => {
     });
   }
 };
+
+//댓글 수정하기
+exports.updateComment = async (req, res) => {
+  try {
+    const user = req.user;
+    const commentId = req.params.commentId;
+    const { content } = req.body;
+
+    const comment = await Comment.findById(commentId);
+
+    if (!comment) {
+      return res.send({
+        success: false,
+        msg: "댓글이 존재하지 않습니다.",
+      });
+    }
+
+    if (comment.author !== user.id) {
+      return res.send({
+        success: false,
+        msg: "본인의 댓글만 수정할 수 있습니다.",
+      });
+    }
+
+    // 댓글 내용 수정
+    comment.content = content;
+    await comment.save();
+
+    return res.send({
+      success: true,
+      msg: "댓글이 수정되었습니다.",
+      comment,
+    });
+  } catch (err) {
+    return res.send({
+      success: false,
+      msg: err.message,
+    });
+  }
+};

@@ -53,14 +53,28 @@ const BoardDetail = () => {
   };
   // navigate("/board");
 
+  const handleEdit = async (e, postId) => {
+    e.preventDefault();
+
+    navigate(`/board/edit/${postId}`);
+  };
+
   return (
     <div className="board-detail">
       <div className="header">
         <h1>{post.title}</h1>
         {post.author === userId && (
-          <button className="delete-button" onClick={handleDelete}>
-            ❌
-          </button>
+          <>
+            <button
+              className="delete-button"
+              onClick={(e) => handleEdit(e, post._id)}
+            >
+              ✍️
+            </button>
+            <button className="delete-button" onClick={handleDelete}>
+              ❌
+            </button>
+          </>
         )}
         <button className="back-button" onClick={handleBack}>
           🔙
