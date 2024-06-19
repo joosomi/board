@@ -16,4 +16,6 @@ router.get("/:id", Ccomment.getCommentsByBoard);
 //댓글 삭제
 router.post("/:commentId", Ccomment.deleteComment);
 
+router.get("/user", auth, Ccomment.getCommentByUserId);
+
 module.exports = router;

@@ -12,4 +12,7 @@ router.get("/posts", Cboard.getAllPosts);
 router.post("/post/:id", Cboard.deletePost);
 //axios-delete 요청은 data 필드를 사용할 수 없어서 post 요청으로 수정함
 
+router.get("/user", auth, Cboard.getPostByUserId);
+router.put("/edit/:id", auth, Cboard.updatePost);
+
 module.exports = router;

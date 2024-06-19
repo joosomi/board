@@ -49,7 +49,7 @@ const BoardDetail = () => {
   };
 
   const handleBack = () => {
-    navigate("/board");
+    navigate(-1);
   };
   // navigate("/board");
 

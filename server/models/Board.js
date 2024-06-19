@@ -17,6 +17,14 @@ const boardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  commentCount: {
+    type: Number,
+    default: 0,
+  },
+  viewCount: {
+    type: Number,
+    default: 0,
+  },
 });
 
 const Board = mongoose.model("Board", boardSchema);

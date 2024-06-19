@@ -1,18 +1,34 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import { useCookies } from "react-cookie";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import "../pages/css/boardwrite.css";
 
 axios.defaults.baseURL = process.env.REACT_APP_API_BASE_URL;
 
-const BoardWrite = () => {
+const BoardEdit = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [cookies] = useCookies(["x_auth"]); // useCookies 훅 사용
+  const [errorMessage, setErrorMessage] = useState("");
 
   const navigate = useNavigate();
+  const { id } = useParams();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/board/post/${id}`);
+        // console.log(response);
+        setTitle(response.data.post.title);
+        setContent(response.data.post.content);
+      } catch (error) {
+        console.error("Error fetching the post data", error);
+        setErrorMessage("게시글을 불러오는 중 오류가 발생했습니다.");
+      }
+    };
+    fetchData();
+  }, []);
+
+  //글 수정하기
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -28,32 +44,24 @@ const BoardWrite = () => {
     }
 
     try {
-      const response = await axios.post(
-        "/board/write",
-        {
-          title,
-          content,
-        },
-        {
-          withCredentials: true,
-        }
+      const response = await axios.put(
+        `/board/edit/${id}`,
+        { title, content },
+        { withCredentials: true }
       );
-
-      // console.log(response.data);
       if (response.data.success) {
-        alert("글 작성이 완료되었습니다.");
-        navigate("/board"); // 글 작성 후 게시판 페이지로 이동
+        navigate(`/board/post/${id}`);
       } else {
-        alert("글 작성에 실패했습니다. 다시 시도해주세요.");
+        setErrorMessage(response.data.msg);
       }
     } catch (error) {
-      console.error("글 작성 중 오류가 발생했습니다:", error);
-      alert("글 작성 중 오류가 발생했습니다. 다시 시도해주세요.");
+      console.error("Error updating the post", error);
+      setErrorMessage("게시글 수정 중 오류가 발생했습니다.");
     }
   };
 
   const handleCancel = () => {
-    navigate("/board"); // 취소 버튼 클릭 시 게시판 페이지로 이동
+    navigate(-1);
   };
 
   return (
@@ -87,7 +95,7 @@ const BoardWrite = () => {
           />
         </div>
       </div>
-
+      {/* {errorMessage && <p className="error-message">{errorMessage}</p>} */}
       <div className="button-container">
         <button type="submit" className="submit-button">
           작성
@@ -100,4 +108,4 @@ const BoardWrite = () => {
   );
 };
 
-export default BoardWrite;
+export default BoardEdit;

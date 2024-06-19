@@ -8,6 +8,7 @@ const userSchema = mongoose.Schema({
   id: {
     type: String,
     required: true,
+    unique: true,
   },
   password: {
     type: String,
@@ -46,8 +47,18 @@ userSchema.methods.comparePassword = async function (plainPassword) {
 // 토큰 생성 메서드
 userSchema.methods.generateToken = async function () {
   try {
-    const token = jwt.sign({ _id: this._id.toHexString() }, "secretToken");
+    const payload = {
+      _id: this._id.toHexString(),
+      id: this.id,
+    };
+
+    const token = jwt.sign(payload, "secretToken", { expiresIn: "1h" }); // 1시간 유효기간 설정
     this.token = token;
+
+    // 토큰 유효기간 설정 (예: 현재 시간 + 1시간)
+    const oneHour = 60 * 60 * 1000;
+    this.tokenExp = Date.now() + oneHour;
+
     await this.save();
     return this;
   } catch (err) {

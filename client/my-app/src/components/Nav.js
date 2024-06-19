@@ -29,6 +29,8 @@ const Nav = () => {
           {" | "}
           <Link to="/board">Board</Link> {" | "}
           <Link to="/board/write">Write</Link>
+          {" | "}
+          <Link to="/board/user">MyPage</Link>
         </>
       )}
     </nav>

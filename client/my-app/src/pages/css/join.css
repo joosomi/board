@@ -27,6 +27,7 @@ h1 {
 .form-group label {
   margin-bottom: 5px;
   font-weight: bold;
+  margin-top: 10px;
 }
 
 .form-group input {

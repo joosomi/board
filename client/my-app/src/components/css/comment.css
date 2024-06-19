@@ -3,9 +3,7 @@
   border-top: 1px solid #ccc;
   font-family: Arial, sans-serif;
   /* overflow-y: auto; 세로 스크롤을 허용 */
-  max-height: calc(
-    100vh - 90px
-  ); /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
+  /* max-height: calc(100vh - 70px) * /; /* 최대 높이를 설정하여 스크롤이 생기도록 함 */
 }
 
 .comment-form {
@@ -78,33 +76,36 @@
   border-bottom: 1px solid #ccc;
 }
 
-.comment-item p {
+.comment-item {
   margin: 5px 0;
   font-size: 0.9em;
 }
 
-.comment-item .comment-author {
+.comment-author {
   font-weight: bold;
   font-size: 13px;
   color: #555;
+  margin: 5px 0;
 }
 
 .comment-meta {
   display: flex;
   align-items: center;
-  gap: 10px; /* 버튼과 날짜 사이의 간격 */
 }
 
 .comment-date {
-  flex-shrink: 0; /* 날짜 요소가 줄어들지 않도록 설정 */
+  /* flex-shrink: 0; 날짜 요소가 줄어들지 않도록 설정 */
   white-space: nowrap; /* 날짜가 한 줄에 표시되도록 설정 */
+  font-size: 0.7rem;
+  color: gray;
+  margin-right: 6px;
 }
 
 .delete-btn {
   background-color: transparent;
   border: none;
   cursor: pointer;
-  font-size: 0.6rem;
+  font-size: 0.5em;
   color: red;
   padding: 0;
 }
@@ -119,7 +120,8 @@
 }
 
 .reply-item {
-  margin-left: 5px; /* 대댓글 들여쓰기 */
+  margin-top: 5px;
+  margin-left: 6px; /* 대댓글 들여쓰기 */
   padding: 10px;
   /* border-left: 1px solid #ccc; 대댓글 구분선 */
 }
@@ -128,6 +130,7 @@
   font-weight: bold;
   font-size: 12px;
   color: #555;
+  margin: 5px 0;
 }
 
 .reply-item .reply-date {

@@ -4,8 +4,8 @@
   padding: 20px;
   max-width: 800px;
   margin: 0 auto;
-  height: calc(100vh - 70px); /* 전체 화면 높이에서 70px 뺀 값 */
-  overflow-y: auto;
+  /* height: calc(100vh - 70px); 전체 화면 높이에서 70px 뺀 값 */
+  /* overflow-y: auto; */
 }
 
 .board-header {

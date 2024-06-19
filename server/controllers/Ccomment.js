@@ -1,4 +1,5 @@
 const { Comment } = require("../models/Comment");
+const { Board } = require("../models/Board");
 
 //댓글 작성하기
 exports.writeComment = async (req, res) => {
@@ -19,6 +20,9 @@ exports.writeComment = async (req, res) => {
     });
 
     await newComment.save();
+
+    //댓글 수 증가
+    await Board.findByIdAndUpdate(boardId, { $inc: { commentCount: 1 } });
 
     res.send({
       success: true,
@@ -84,6 +88,27 @@ exports.getCommentsByBoard = async (req, res) => {
   }
 };
 
+//내가 쓴 댓글 가져오기
+exports.getCommentByUserId = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const comments = await Comment.find({ author: user.id });
+    // console.log(posts);
+    if (!comments) {
+      return res.send({
+        success: false,
+        message: "댓글을 찾을 수 없습니다.",
+      });
+    }
+
+    res.send({ success: true, data: posts });
+  } catch (error) {
+    console.error(error);
+    res.send({ success: false, message: "서버 에러" });
+  }
+};
+
 //본인이 쓴 댓글 삭제
 exports.deleteComment = async (req, res) => {
   try {
@@ -108,6 +133,10 @@ exports.deleteComment = async (req, res) => {
     // isDeleted를 true로 설정
     comment.isDeleted = true;
     await comment.save();
+
+    await Board.findByIdAndUpdate(comment.boardId, {
+      $inc: { commentCount: -1 },
+    });
 
     return res.send({
       success: true,
